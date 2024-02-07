@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views.decorators.vary import vary_on_cookie
 from rest_framework.viewsets import ViewSet 
 from rest_framework.views import APIView
 from .serializer import ProductsSerializer ,ProductsSerializerCreat ,ProductsSerializerPartialUpdate
@@ -15,9 +17,12 @@ from django.contrib.auth.decorators import permission_required
 from rest_framework.decorators import api_view
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from django.views.decorators.cache import cache_page
 from user_model.models import User
 
 class ViewShop(ViewSet):
+    @method_decorator(cache_page(60*5))
+    @method_decorator(vary_on_cookie)
     def list(self , request):
         Products = ShopModel.objects.all()
         serializer = ProductsSerializer(Products , many = True ,  context={'request': request})
