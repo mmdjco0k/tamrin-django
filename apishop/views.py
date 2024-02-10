@@ -21,8 +21,7 @@ from django.views.decorators.cache import cache_page
 from user_model.models import User
 
 class ViewShop(ViewSet):
-    @method_decorator(cache_page(60*5))
-    @method_decorator(vary_on_cookie)
+    @method_decorator(cache_page(60*2))
     def list(self , request):
         Products = ShopModel.objects.all()
         serializer = ProductsSerializer(Products , many = True ,  context={'request': request})

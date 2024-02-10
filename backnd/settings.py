@@ -125,6 +125,14 @@ USE_L10N = True
 
 USE_TZ = True
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+    }
+}
+
+
 REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'api.permissions.IsStaffOrReadOnly',
